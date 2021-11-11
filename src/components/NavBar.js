@@ -1,4 +1,5 @@
-import '../App.css'
+import './NavBar.css'
+import { CartWidget } from './CartWidget.js'
 
  export const NavBar = () => {
     
@@ -14,6 +15,8 @@ import '../App.css'
                 <li>Contacto </li>
             </ul>
 
+          {CartWidget}
+          
          </nav>
     </div>
     )
