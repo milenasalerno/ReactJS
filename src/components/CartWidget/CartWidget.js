@@ -1,4 +1,4 @@
-import './NavBar.css'
+import '../NavBar/NavBar.css'
 import { BsCart3 } from 'react-icons/bs'
 
 
