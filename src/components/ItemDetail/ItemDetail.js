@@ -22,5 +22,5 @@ export const ItemDetail = ({id, name, img, desc, price, category}) => {
 
             <button className="btn btn-primary" onClick={handleVolver}>Volver</button>
             <button className="btn btn-danger" onClick={handleVolverInicio}>Volver al inicio</button>
-        </div>)
-    
+        </div>
+        )
