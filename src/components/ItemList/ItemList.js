@@ -9,7 +9,6 @@ export const ItemList = ({items}) => {
             <h2>Productos</h2>
             <hr/>
             <Row>
-                {/* {items.map((prod) => <Item prod={prod}/>)} */}
                 {items.map((prod) => <Item key={prod.id} {...prod}/>)}
             </Row>
         </Container>
