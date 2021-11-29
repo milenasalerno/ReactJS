@@ -1,22 +1,43 @@
-import { Container } from 'react-bootstrap';
-import React from 'react';
-import { ProductCard } from '../ProductCard/ProductCard';
-import { ItemCount } from '../ItemCount/ItemCount';
-import imagenes from '../../imagenes/corset.jpg'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
+import { pedirDatos } from "../../helpers/pedirDatos"
+import { ItemList } from '../ItemList/ItemList'
 
+export const ItemListContainer = () => {
 
+    const [loading, setLoading] = useState(false)
+    const [productos, setProductos] = useState([])
 
-export const ItemListContainer = ( {greeting} ) => {
+    const { catId } = useParams()
+
+    useEffect(() => {
+        
+        setLoading(true)
+        pedirDatos()
+            .then( (resp) => {
+
+                if (!catId) {
+                    setProductos(resp)
+                } else {
+                    setProductos( resp.filter( prod => prod.category === catId) )
+                }
+            })
+            .catch( (error) => {
+                console.log(error)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+
+    }, [catId])
 
     return (
-        <Container className="my-5">
-            <h2>{greeting}</h2>
-            <hr/>
-            <ProductCard img={imagenes} stock="10" />
-            <ProductCard img={imagenes} stock="10" />
-            <ItemCount/>
-          
-        </Container>
+        <>
+            {
+                loading 
+                    ? <h2>Cargando...</h2> 
+                    : <ItemList productos={productos}/>
+            }
+        </>
     )
 }
-

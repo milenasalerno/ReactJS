@@ -1,43 +1,25 @@
-import React, {useState} from "react";
-import {Button} from 'react-bootstrap';
+import {Button} from "react-bootstrap"
 
-export const ItemCount = ({stock}) => {
-    const [counter, setCounter] = useState(1);
-
-    const incrementar = () => {
-        if(stock>counter){
-        setCounter(counter+1);
-        }else {
-            alert("No hay mas stock de este producto")
-        }
-    }
+export const ItemCount = ({stock, setCantidad, cantidad, onAdd} ) => {
     
-    const decrementar = () => {
-        if(counter>1){
-            setCounter(counter-1);
-        }else {
-            alert("no se puede disminuir mas!")
-        }
+    const handleRestar = () => {
+        cantidad > 0 && setCantidad(cantidad - 1)
     }
 
-    const respuesta = () => {
-        alert(`Agregaste ${counter}`)
-       
+    const handleSumar = () => {
+        cantidad < stock && setCantidad(cantidad + 1)
     }
 
     return (
         <div>
-            <h2>{counter}</h2>
+            <h2>{cantidad}</h2>
             <div>
-                <Button variant="primary" onClick={decrementar}>-</Button>
-                <Button variant="primary" onClick={incrementar}>+</Button>
+            <h3>Cantidad a comprar</h3>
+            <Button variant="danger"  onClick={handleRestar}>-</Button>
+            <Button variant="primary" onClick={handleSumar}>+</Button>
+            <hr/>
+            <button type="button" class="btn btn-success" onClick={onAdd}>Agregar al carrito</button>
             </div>
-            <Button variant="primary" size="lg" onClick={respuesta}>
-                Agregar al carrito!
-            </Button>
-
-            
         </div>
     )
-
 }

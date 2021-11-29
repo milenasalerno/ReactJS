@@ -1,18 +1,22 @@
+import React from 'react';
+import  { NavBar }  from './components/NavBar/NavBar'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavBar } from './components/NavBar/NavBar'
-import { ItemListContainer } from './components/ItemListContainer/ItemListContainer'
+import { BrowserRouter } from 'react-router-dom';
+import { AppRouter } from './router/AppRouter';
 
 function App() {
 
+
   return (
-    <>
-    <div className="App">
-      <NavBar/>
+      <BrowserRouter>
+     
+          <NavBar/>
+          <AppRouter/>
 
-      <ItemListContainer greeting = "¡Bienvenidos!" /> 
+          {/* <Footer/> */}
+        
 
-    </div>
-    </>
+      </BrowserRouter>
   );
 }
 
