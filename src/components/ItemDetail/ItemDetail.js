@@ -1,50 +1,54 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
+import { CartContext } from '../../context/CartContext'
 import { ItemCount } from '../ItemCount/ItemCount'
+export const ItemDetail = ({id, name, img, desc, price, stock}) => {
 
+    const {agregarAlCarrito, isInCart} = useContext(CartContext)
 
-export const ItemDetail = ({id, name, img, desc, price,stock}) => {
-const [cantidad, setCantidad] = useState(0)
-const [agregado, setAgregado] = useState(false)
+    const navigate = useNavigate()
+    
+    const [cantidad, setCantidad] = useState(0)
+    
+    
 
-
-const handleAgregar = () => {
-
-    if (cantidad > 0) {
-        console.log('Item agregado:', {
-            id,
-            name,
-            price,
-            cantidad,
-        })
-        setAgregado(true)
+    const handleVolverInicio = () => {
+        navigate('/')
     }
-}
+
+    const handleAgregar = () => {
+        if (cantidad > 0) {
+            agregarAlCarrito({
+                id,
+                name,
+                price,
+                img,
+                cantidad
+            })
+        }   
+    }
 
     return (
-        <div className="products ">
-            <div>
-                <h2>{name}</h2>
-                <img src={img} alt={name}/>
-                <p>{desc}</p>
-                <span className="price">Precio: $ {price} + IVA</span>
-                <p>Stock actual: {stock} unidades</p>
-            </div>
-                
-                {
-                    !agregado
-                    ? 
-                    <ItemCount 
-                    stock={stock}
-                    cantidad={cantidad}
-                    setCantidad={setCantidad}
-                    onAdd={handleAgregar} />
-                    :
-                    <Link to="/CartView" className="btn btn-success">Finalizar compra</Link>
-                }
-                
-                
+        <div>
+            <h2>{name}</h2>
+            <img src={img} alt={name}/>
+            <p>{desc}</p>
+            <p>Precio: ${price}</p>
 
+            {
+                !isInCart(id)
+                    ?   <ItemCount 
+                            max={stock} 
+                            cantidad={cantidad} 
+                            setCantidad={setCantidad}
+                            onAdd={handleAgregar}
+                        />
+                    :   <Link to="/cart" className="btn btn-success d-block">Terminar mi compra</Link>
+            }
+
+            
+            <button className="btn btn-outline-primary" onClick={handleVolverInicio}>Volver al inicio</button>
         </div>
     )
 }
