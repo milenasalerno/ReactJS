@@ -1,14 +1,19 @@
-import '../NavBar/NavBar.css'
-import { BsCart3 } from 'react-icons/bs'
-
+import React, { useContext } from 'react'
+import { FaCartPlus } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import { CartContext } from '../../context/CartContext'
 
 
 export const CartWidget = () => {
 
+    const {totalCantidad, carrito} = useContext(CartContext)
 
     return (
-        <div>
-            <BsCart3 className="cartWidget"/>
+        <div className={carrito.length === 0 ? 'hidden widget' : 'widget'}>
+            <Link to="/cart">
+                <FaCartPlus className="cartWidget"/>
+                <span>{totalCantidad()}</span>
+            </Link>
         </div>
     )
 }
